@@ -37,19 +37,35 @@ array_shift($fruits);
 // Split the string into an array
 $string = "Apple,Orange,AK47";
 echo '<pre>';
-var_dump(explode(',', $string ));
+var_dump(explode(',', $string )).PHP_EOL;
 echo '</pre>';
 // Combine array elements into string
-print_r($fruits);
+print_r(implode("&", $fruits).PHP_EOL.'<br>');
 // Check if element exist in the array
 echo in_array("Peach", $fruits).PHP_EOL;
 // Search element index in the array
-
+print_r('is apple in array: '.array_search('Apple', $fruits).PHP_EOL);
 // Merge two arrays
-
+$vegetables = ['Tomato', 'Pumpkin', 'Cabbage'];
+echo '<pre>';
+echo 'Merge arrays'.PHP_EOL;
+var_dump(array_merge($fruits, $vegetables));
+var_dump([...$fruits, ...$vegetables]);
+echo '</pre>';
 // Sorting of array (Reverse order also)
-
+//sort();
+//rsort(); //reverse sort
+//usort(); //user sort vs comparator
 // Filter, map, reduce of array
+$numbers = [1,2,3,4,5,6,];
+echo '<pre>';
+echo 'Filter numbers: '.PHP_EOL;
+var_dump(array_filter($numbers, function ($n) {
+    return $n % 2 == 0;
+}));
+echo '</pre>';
+
+
 
 
 // https://www.php.net/manual/en/ref.array.php
