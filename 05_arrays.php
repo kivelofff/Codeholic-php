@@ -63,7 +63,13 @@ echo 'Filter numbers: '.PHP_EOL;
 var_dump(array_filter($numbers, function ($n) {
     return $n % 2 == 0;
 }));
+$snother_way_to_filter = array_filter($numbers, fn($n) => $n % 2 === 0);
 echo '</pre>';
+
+//map arrays
+array_map(fn($n) => $n * $n, $numbers);
+//reduce
+array_reduce($numbers, fn($carry, $item) => $carry + $item);
 
 
 
@@ -76,17 +82,41 @@ echo '</pre>';
 
 // Create an associative array
 
+$person = [
+    'name' => 'John',
+    'surname' => 'Doe',
+    'age' => 30,
+    'hobbies' => ['Tennis','Computer gaming','Beer drinking']
+];
+
+echo 'Associative arrays'.PHP_EOL;
+
+echo $person['name'];
+
 // Get element by key
 
 // Set element by key
-
+$person['height']=1.8;
 // Check if array has specific key
-
+isset($person['age']);
 // Print the keys of the array
-
+array_keys($person);
 // Print the values of the array
-
+array_values($person);
 // Sorting associative arrays by values, by keys
-
+ksort($person);//by keys
+asort($person);//by values
+krsort($person);//reverse order keys
+arsort($person);//reverse order values
 
 // Two dimensional arrays
+
+$todoItems =[
+    ['title' => 'item1', 'completed' => true],
+    ['title' => 'item2', 'completed' => false],
+    ['title' => 'item3', 'completed' => true]
+];
+
+echo '<pre>';
+var_dump($todoItems);
+echo '</pre>';
