@@ -5,6 +5,16 @@
  * Time: 9:49 AM
  */
 
+//echo '<pre>';
+//var_dump($_GET);
+//echo '</pre>';
+$keyword = '';
+if (isset($_GET['keyword'])) {
+    $keyword = $_GET['keyword'];
+}
+//echo '<pre>';
+//echo "  $keyword";
+//echo '</pre>';
 ?>
 <!doctype html>
 <html lang="en">
@@ -18,7 +28,7 @@
 <body>
 <form action="" method="get">
   <input type="text" name="keyword"
-         placeholder="Type and hit enter">
+         placeholder="Type and hit enter" value=<?php echo $keyword;?>>
   <button>Search</button>
 </form>
 </body>

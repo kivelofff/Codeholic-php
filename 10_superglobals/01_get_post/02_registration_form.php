@@ -1,5 +1,47 @@
 <?php
+//GET method is used when you need to get data from server.
+//sending data using GET not secure
+/*TODO
+1. Process request only if it's POST
+2. Get input form associative array corresponding POST
+3. stripslahes - remove slashes
+4. htmlspecialchars - remove special chars, which used in scripts
+5. create function to validate data
+6. create array for errors
+7. create constant for isRequired
+8. change field class if corresponding error has happened
+9. invalid feedback div could be always there.
+*/
+const NOT_SET_ERR = 'Value is empty';
+$errors = [];
+if ($_SERVER['REQUEST_METHOD']== 'POST') {
+    echo '<pre>';
+    var_dump($_POST);;
+    echo '</pre>';
+    $username = checkNotEmptyAndSafe($_POST['username'], 'username', $errors);
+    $email = checkNotEmptyAndSafe($_POST['email'], 'email', $errors);
+    $password = checkNotEmptyAndSafe($_POST['password'], 'password', $errors);
+    $password_confirm = checkNotEmptyAndSafe($_POST['password_confirm'], 'password_confirm', $errors);
+    $cv_url = checkNotEmptyAndSafe($_POST['cv_url'], 'cv_url', $errors);
 
+    echo $username.'<br>';
+    echo $email.'<br>';
+    echo $password.'<br>';
+    echo $password_confirm.'<br>';
+    echo $cv_url.'<br>';
+    echo '<pre>';
+    var_dump($errors);
+    echo '</pre>';
+
+}
+
+function checkNotEmptyAndSafe($str, $type, &$errors ) {
+    if($str != '') {
+        return htmlspecialchars(stripslashes($str));
+    } else {
+        $errors[$type] = NOT_SET_ERR;
+    }
+}
 
 ?>
 <!doctype html>
