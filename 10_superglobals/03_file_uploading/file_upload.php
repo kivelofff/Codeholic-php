@@ -1,5 +1,21 @@
 <?php
 
+/*
+ * TODO:
+ * 1. print files from $_FILES
+ * 2. form should have proper enctype
+ * 3. print what is inside $_FILES
+ * 4. move uploaded file to current file
+ * 5. change post_max_size value in xampp/php/php.ini to make able to upload big files
+ * 6. restart apache
+ * 7. try to upload big file
+ * 8. make simple validation:
+ *  8.1 check file size. if it's too big show error
+ *  8.2 get an extension with pathinfo
+ *  8.3 check if it's in array of allowed extension
+
+*/
+
 ?>
 <!doctype html>
 <html lang="en">
