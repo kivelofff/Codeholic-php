@@ -18,11 +18,12 @@ if ($_SERVER['REQUEST_METHOD']== 'POST') {
     echo '<pre>';
     var_dump($_POST);;
     echo '</pre>';
-    $username = checkNotEmptyAndSafe($_POST['username'], 'username', $errors);
-    $email = checkNotEmptyAndSafe($_POST['email'], 'email', $errors);
-    $password = checkNotEmptyAndSafe($_POST['password'], 'password', $errors);
-    $password_confirm = checkNotEmptyAndSafe($_POST['password_confirm'], 'password_confirm', $errors);
-    $cv_url = checkNotEmptyAndSafe($_POST['cv_url'], 'cv_url', $errors);
+    $username = checkUsermame($_POST['username'], $errors)??'';
+    $email = checkEmail($_POST['email'], $errors)??'';
+    $passwords = checkPassword($_POST['password'], $_POST['password_confirm'], $errors);
+    $password = $passwords[0]??'';
+    $password_confirm = $passwords[1]??'';
+    $cv_url = checkCvUrl($_POST['cv_url'], $errors)??'';
 
     echo $username.'<br>';
     echo $email.'<br>';
@@ -43,6 +44,41 @@ function checkNotEmptyAndSafe($str, $type, &$errors ) {
     }
 }
 
+function checkUsermame($str, &$errors) {
+    $username = checkNotEmptyAndSafe($str, 'username', $errors);
+    if (!isset($errors['username']) && strlen($username)<6 || strlen($username)>16) {
+        $errors['username'] = 'username should be longer than 6 and shorter than 16 symbols';
+    }
+    return $username;
+}
+
+function checkEmail($str, &$errors) {
+    $email = checkNotEmptyAndSafe($str, 'email', $errors);
+    if (!isset($errors['email']) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'wrong email format';
+    }
+    return $email;
+}
+
+function checkPassword($str1, $str2, &$errors): array
+{
+    $password = checkNotEmptyAndSafe($str1, 'password', $errors);
+    $password_confirm = checkNotEmptyAndSafe($str2, 'password_confirm', $errors);
+    if ((!isset($errors['password']) && !isset($errors['password_confirm'])) && strcmp($password, $password_confirm)!=0) {
+        $errors['password'] = 'passwords don\'t match';
+        $errors['password_confirm'] = 'passwords don\'t match';
+    }
+    return [$password, $password_confirm];
+
+}
+
+function checkCvUrl($str, &$errors) {
+    $cv_url = checkNotEmptyAndSafe($str, 'cv_url', $errors);
+    if (!isset($errors['cv_url']) && !filter_var($cv_url, FILTER_VALIDATE_URL)) {
+        $errors['cv_url'] = 'wrong url format';
+    }
+    return $cv_url;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -63,15 +99,23 @@ function checkNotEmptyAndSafe($str, $type, &$errors ) {
         <div class="col">
             <div class="form-group">
                 <label>Username</label>
-                <input class="form-control"
-                       name="username">
+                <input class="form-control<?php echo isset($errors['username'])?' is-invalid':'';?>"
+                       name="username"  value="<?php echo $username?>">
                 <small class="form-text text-muted">Min: 6 and max 16 characters</small>
+                <div class="invalid-feedback">
+                    <?php echo $errors['username'] ?? '' ?>
+                </div>
             </div>
+
         </div>
         <div class="col">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" name="email">
+                <input type="email" class="form-control<?php echo isset($errors['email'])?' is-invalid':'';?>"
+                       name="email"  value="<?php echo $email?>">
+                <div class="invalid-feedback">
+                    <?php echo $errors['email'] ?? '' ?>
+                </div>
             </div>
         </div>
     </div>
@@ -79,24 +123,33 @@ function checkNotEmptyAndSafe($str, $type, &$errors ) {
         <div class="col">
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control"
-                       name="password">
+                <input type="password" class="form-control<?php echo isset($errors['password'])?' is-invalid':'';?>"
+                       name="password"  value="<?php echo $password?>">
+                <div class="invalid-feedback">
+                    <?php echo $errors['password'] ?? '' ?>
+                </div>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label>Repeat Password</label>
                 <input type="password"
-                       class="form-control"
-                       name="password_confirm">
+                       class="form-control<?php echo isset($errors['password_confirm'])?' is-invalid':'';?>"
+                       name="password_confirm"  value="<?php echo $password_confirm?>">
+                <div class="invalid-feedback">
+                    <?php echo $errors['password_confirm'] ?? '' ?>
+                </div>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="form-group">
             <label>Your CV link</label>
-            <input type="text" class="form-control"
-                   name="cv_url" placeholder="https://www.example.com/my-cv"/>
+            <input type="text" class="form-control<?php echo isset($errors['cv_url'])?' is-invalid':'';?>"
+                   name="cv_url" value="<?php echo $cv_url?>"/>
+            <div class="invalid-feedback">
+                <?php echo $errors['cv_url'] ?? '' ?>
+            </div>
         </div>
     </div>
 

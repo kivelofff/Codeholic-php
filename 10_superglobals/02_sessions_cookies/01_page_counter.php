@@ -1,4 +1,23 @@
 <?php
+/*
+ * TODO
+ * 1. start session
+ * 2. print session id
+ * you have to start session before any html code
+ * 3. check how many time page have been visited
+ */
+
+session_start();
+
+echo '<pre>';
+var_dump(session_id());
+echo'</pre>';
+
+$_SESSION['counter']??=0;
+$_SESSION['counter']++;
+
+echo 'counter=';
+echo $_SESSION['counter'].'<br>';
 
 ?>
 
