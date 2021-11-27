@@ -15,6 +15,13 @@
  *  8.3 check if it's in array of allowed extension
 
 */
+echo '<pre>';
+var_dump($_FILES);
+echo '</pre>';
+
+if (isset($_FILES['file'])) {
+    move_uploaded_file($_FILES['file']['tmp_name'], $_FILES['file']['name']);
+}
 
 ?>
 <!doctype html>
@@ -27,7 +34,7 @@
   <title>Document</title>
 </head>
 <body>
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
   <input type="file" name="file"><br>
   <button>Submit</button>
 </form>
