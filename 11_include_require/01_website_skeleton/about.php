@@ -8,14 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-<header>
-    <a href="index.php">Home</a>
-    <a href="about.php">About</a>
-</header>
+<?php include_once 'partials/header.php'?>
 <h1>About us</h1>
 
-<footer>
-    Copyright &copy; TheCodeholic</footer>
+<?php
+$year = date('Y');
+include_once 'partials/footer.php'?>
 </body>
 </html>
 
