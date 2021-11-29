@@ -20,7 +20,14 @@ var_dump($_FILES);
 echo '</pre>';
 
 if (isset($_FILES['file'])) {
-    move_uploaded_file($_FILES['file']['tmp_name'], $_FILES['file']['name']);
+    if ($_FILES['file']['size'] > 10*1024*1024) {
+        echo "File is too big".'<br>';
+    } else if (!in_array(pathinfo($_FILES['file']['name'])['extension'], ['jpg', 'png', 'jpeg', 'gif'])) {
+        echo "Wrong file type".'<br>';
+    } else {
+        move_uploaded_file($_FILES['file']['tmp_name'], $_FILES['file']['name']);
+    }
+
 }
 
 ?>
