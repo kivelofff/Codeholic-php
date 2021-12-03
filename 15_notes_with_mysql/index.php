@@ -1,4 +1,18 @@
 <?php
+/*
+ * TODO:
+ * 1.Create database
+ *  1.1 Select notes/utf8_unicode_ci
+ *  1.2 Create table notes (id, title, description, create_date)
+ * 2. in php create PDO 'mysql:server=localhost;dbname=notes', root/pass
+ * 3. setAttribute of pdo errmode to exception
+ * 4. create class connection.php with pdo, initialize it in constructor
+ * 5. create function getNotes this->pdo->prepare
+ * 6. return statement->fetchAll as associative error
+ * 7. get notes
+ * 8. using foreach make a list of it
+ * */
+
 ?>
 
 <!DOCTYPE html>
