@@ -1,0 +1,22 @@
+{
+    "name": "gk21/16_autoloading",
+    "autoload": {
+        "psr-4": {
+            "Gk21\\16Autoloading\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "stupid-laborant",
+            "email": "iamawhale@mail.ru"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "./app"
+        }
+    }
+}
